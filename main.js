@@ -2,7 +2,6 @@ const navItems = document.querySelector('.nav__items');
 const openNavBtn = document.querySelector('#open__nav-btn');
 const closeNavBtn = document.querySelector('#close__nav-btn');
 
-
 // opens nav dropdown
 const openNav = () => {
     navItems.style.display = 'flex';
@@ -19,3 +18,24 @@ const closeNav = () => {
 
 openNavBtn.addEventListener('click', openNav);
 closeNavBtn.addEventListener('click', closeNav);
+
+
+
+const sidebar = document.querySelector('aside');
+const showSidebarBtn = document.querySelector('#show__sidebar-btn');
+const hideSidebarBtn = document.querySelector('#hide__sidebar-btn'); // Виправлено селектор
+
+const showSidebar = () => {
+    sidebar.style.left = '0';
+    showSidebarBtn.style.display = 'none';
+    hideSidebarBtn.style.display = 'inline-block';
+}
+
+const hideSidebar = () => {
+    sidebar.style.left = '-100%'; // Приховати бічну панель
+    showSidebarBtn.style.display = 'inline-block';
+    hideSidebarBtn.style.display = 'none';
+}
+
+showSidebarBtn.addEventListener('click', showSidebar);
+hideSidebarBtn.addEventListener('click', hideSidebar);
