@@ -32,8 +32,12 @@
 * {
     margin: 0;
     padding: 0;
+    outline: 0;
+    border: 0;
+    appearance: 0;
     list-style: none;
     text-decoration: none;
+    box-sizing: border-box;
 }
 
 body {
@@ -349,12 +353,14 @@ Search
     width: 30rem;
     background: var(--color-gray-900);
     display: flex;
-    align-items: rigth;
+    align-items: center;
+    flex-direction: row;
     justify-content: space-between;
     overflow: hidden;
-    padding: 0.6rem 1.2rem;
+    padding: 0.6rem 1rem;
     border-radius: var(--card-border-radius-2);
     color: var(--color-gray-300);
+    border: none; /* Added to remove the border */
 }
 
 
@@ -374,7 +380,6 @@ Search
 
 .search__bar input::placeholder{
     color: var(--color-gray-300);
-    border: none;
 }
 
 
@@ -405,10 +410,147 @@ Button STYLES
 
 
 
+
 /* ===================================================
 ENDDDDDDDDdd Button STYLES
-==================================
+======================================================
 */
+
+
+
+
+/* ===================================================
+SINGLE POSTS
+======================================================
+*/
+
+.singlepost {
+    margin: 6rem 0 2rem;
+}
+.singlepost__container {
+    width: var(--form-width);
+    background: var(--color-gray-900);
+    padding: 1rem 2rem 2rem;
+}
+
+.singlepost__container p {
+    margin-top: 1rem;
+    line-height: 1.7;
+}
+
+
+
+/* ===================================================
+CAtegory POSTS
+======================================================*/
+
+.category__title {
+    height: 15rem;
+    margin-top: 4.5rem;
+    background: var(--color-bg-gray-900);
+    display: grid;
+    place-items: center;
+}
+
+
+
+/* ===================================================
+EMPTY PAGES
+======================================================*/
+
+.empty__page{
+    height: 70vh;
+    text-align: center;
+    display: grid;
+    place-content: center;
+}
+
+
+/* ===================================================
+GENERAL FORM
+======================================================*/
+
+
+.form__section {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+
+.form__section-container {
+    width: var(--form-width);
+}
+
+.alert__message {
+    padding: 0.8rem 1.4rem;
+    margin-bottom: 1rem;
+    border-radius: var(--card-border-radius-2);
+
+}
+
+
+.alert__message.error {
+    background: var(--color-red-light);
+    color: var(--color-red);
+
+}
+
+.alert__message.success {
+    background: var(--color-green-light);
+    color: var(--color-green);
+    
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form__control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+
+input, textarea, select {
+    padding: 0.8rem 1.4rem;
+    background-color: var(--color-gray-900);
+    border-radius: var(--card-border-radius-2);
+    resize: none;
+    color: var(--color-white);
+}
+
+
+.form__section small {
+    margin-top: 1rem;
+    display: block;
+}
+
+
+.form__section small a{
+    color: var(--color-primary)
+}
+
+
+.form__control.inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 /* media Queries */
@@ -545,15 +687,13 @@ ENDDDDDDDDdd Button STYLES
     }
 
     /* ===================== BLOG ====================== */
-
     .search__bar-container {
-
         width: 60%;
-
     }
 
-
-
+    .form__section-container{
+        padding: 3rem;
+    }
 
 }
 
@@ -597,13 +737,19 @@ ENDDDDDDDDdd Button STYLES
 
 
     /* ===================== BLOG ====================== */
-
     .search__bar-container {
-
         width: var(--container-width-md);
-
     }
 
+    /* ===================== SINGLE POST ====================== */
+    .singlepost__container {
+        background-color: transparent;
+        padding: 0;
+    }
 
+    /* GENERAL */
+    .form__section-container{
+        padding: 0;    
+    }
     
 }
