@@ -1,154 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Multipage Web-Site</title>
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="./style.css">
-    <!-- ICONSCOUT CDN -->
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    <!-- Google fonts MONTSERRAT-->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<?php
+include 'partials/header.php';
 
-</head>
-<body>
+// fetch categories from database
+$query = "SELECT * FROM categories";
+$categories = mysqli_query($connection, $query);
 
-    <nav>
-        <div class="container nav__container">
-            <a href="index.html" class="nav__logo">Romii</a>
-            <ul class="nav__items">
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-        
-                <li class="nav__profile">
-                    <div class="avatar">
-                        <img src="./images/avatar1.jpg" alt="User Avatar">
-                    </div>
-                    <ul>
-                        <li><a href="dashboard.html">Dashboard</a></li>
-                        <li><a href="logout.html">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <button id="open__nav-btn"><i class="uil uil-bars"></i></button>
-            <button id="close__nav-btn"><i class="uil uil-multiply"></i></button>
-        </div>
-    </nav>
-    <!-- END OF NAV -->
+// get back form data if form was invalid
+$title = $_SESSION['add-post-data']['title'] ?? null;
+$body = $_SESSION['add-post-data']['body'] ?? null;
 
-
+// delete form data session
+unset($_SESSION['add-post-data']);
+?>
 
 
 
 <section class="form__section">
     <div class="container form__section-container">
         <h2>Add Post</h2>
-        <div class="alert__message error">
-            <p>This is an error message</p>
-        </div>
-        <form action="" enctype="multipart/form-data">
-            <input type="text" placeholder="Title">
-            <select>
-                <option value="1">Travel</option>
-                <option value="1">Art</option>
-                <option value="1">Science and Techonogy</option>
-                <option value="1">Travel</option>
-                <option value="1">Travel</option>
-                <option value="1">Travel</option>
-                <option value="1">Travel</option>
-                <option value="1">Travel</option>
+        <?php if (isset($_SESSION['add-post'])) : ?>
+            <div class="alert__message error">
+                <p>
+                    <?= $_SESSION['add-post'];
+                    unset($_SESSION['add-post']);
+                    ?>
+                </p>
+            </div>
+        <?php endif ?>
+        <form action="<?= ROOT_URL ?>admin/add-post-logic.php" enctype="multipart/form-data" method="POST">
+            <input type="text" name="title" value="<?= $title ?>" placeholder="Title">
+            <select name="category">
+                <?php while ($category = mysqli_fetch_assoc($categories)) : ?>
+                    <option value="<?= $category['id'] ?>"><?= $category['title'] ?></option>
+                <?php endwhile ?>
             </select>
-            <textarea rows="10" placeholder="Body"></textarea>
-            <div class="form__control inline">
-                <input type="checkbox" id="is__featured"checked>
-                <label for="is__featured">Featured</label>
-            </div>
+            <textarea rows="10" name="body" placeholder="Body"><?= $body ?></textarea>
+            <?php if (isset($_SESSION['user_is_admin'])) : ?>
+                <div class="form__control inline">
+                    <input type="checkbox" name="is_featured" value="1" id="is_featured" checked>
+                    <label for="is_featured">Featured</label>
+                </div>
+            <?php endif ?>
             <div class="form__control">
-                <label for="thumbail">Add Thumbail</label>
-                <input type="file" id="thumbail">
+                <label for="thumbnail">Add Thumbnail</label>
+                <input type="file" name="thumbnail" id="thumbnail">
             </div>
-            <button type="submit" class="btn">Add Post</button>
+            <button type="submit" name="submit" class="btn">Add Post</button>
         </form>
     </div>
 </section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<footer>
-    <div class="footer__socials">
-        <a href="https://youtube.com" target="_blank"><i class="uil uil-youtube"></i></a>
-        <a href="https://facebook.com" target="_blank"><i class="uil uil-facebook-f"></i></a>
-        <a href="https://instagram.com" target="_blank"><i class="uil uil-instagram-alt"></i></a>
-        <a href="https://twitter.com" target="_blank"><i class="uil uil-twitter"></i></a>
-    </div>
-    <div class="container footer__container">
-        <article>
-            <h4>Categories</h4>
-            <ul>
-                <li><a href="">Art</a></li>
-                <li><a href="">Wild Life</a></li>
-                <li><a href="">Travel</a></li>
-                <li><a href="">Sciecne % Technologys</a></li>
-                <li><a href="">Food</a></li>
-                <li><a href="">Music</a></li>
-            </ul>
-        </article>
-        <article>
-            <h4>Support</h4>
-            <ul>
-                <li><a href="">Online Support</a></li>
-                <li><a href="">Call Numbers</a></li>
-                <li><a href="">Emails</a></li>
-                <li><a href="">Social Support</a></li>
-                <li><a href="">Location</a></li>
-            </ul>
-        </article>
-        <article>
-            <h4>Blog</h4>
-            <ul>
-                <li><a href="">Safety</a></li>
-                <li><a href="">Repair</a></li>
-                <li><a href="">Recent</a></li>
-                <li><a href="">Popular</a></li>
-                <li><a href="">Categories</a></li>
-            </ul>
-        </article>
-        <article>
-            <h4>Permalinks</h4>
-            <ul>
-                <li><a href="">Homer</a></li>
-                <li><a href="">Blog</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">Services</a></li>
-                <li><a href="">Contact</a></li>
-            </ul>
-        </article>
-    </div>
-    <div class="footer__copyright">
-        <small>Copyright &copy; 2024 Romiii </small>
-    </div>
-</footer>
-
-
-
-
-
-
-</head>
-<body
+<?php
+include '../partials/footer.php';
+?>
