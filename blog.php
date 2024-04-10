@@ -1,316 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Multipage Web-Site</title>
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="./style.css">
-    <!-- ICONSCOUT CDN -->
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    <!-- Google fonts MONTSERRAT-->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<?php
+include 'partials/header.php';
 
-</head>
-<body>
-    <nav>
-        <div class="container nav__container">
-            <a href="index.html" class="nav__logo">Romii</a>
-            <ul class="nav__items">
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-        
-                <li class="nav__profile">
-                    <div class="avatar">
-                        <img src="./images/avatar1.jpg" alt="User Avatar">
-                    </div>
-                    <ul>
-                        <li><a href="dashboard.html">Dashboard</a></li>
-                        <li><a href="logout.html">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <button id="open__nav-btn"><i class="uil uil-bars"></i></button>
-            <button id="close__nav-btn"><i class="uil uil-multiply"></i></button>
+
+// fetch all posts from posts table
+$query = "SELECT * FROM posts ORDER BY date_time DESC";
+$posts = mysqli_query($connection, $query);
+?>
+
+
+
+<section class="search__bar">
+    <form class="container search__bar-container" action="<?= ROOT_URL ?>search.php" method="GET">
+        <div>
+            <i class="uil uil-search"></i>
+            <input type="search" name="search" placeholder="Search">
         </div>
-    </nav>
-    <!-- END OF NAV -->
+        <button type="submit" name="submit" class="btn">Go</button>
+    </form>
+</section>
+<!--====================== END OF SEARCH ====================-->
 
 
 
 
 
-<!-- Search-->
-    <section class="search__bar">
-        <form class="container search__bar-container">
-            <div class="search__bar-input">
-                <i class="uil uil-search"></i>
-                <input type="search" placeholder="Search"> 
-            </div>
-            <button type="submit" class="btn">Go</button>
-        </form>
-    </section>
-
-<!--End of search-->
 
 
-
-
-    <!-- POST -->
-
-    <section class="posts">
-        <div class="container posts__container">
+<section class="posts <?= $featured ? '' : 'section__extra-margin' ?>">
+    <div class="container posts__container">
+        <?php while ($post = mysqli_fetch_assoc($posts)) : ?>
             <article class="post">
-                <div class="post__thumbail">
-                    <img src="./images/blog2.jpg">
+                <div class="post__thumbnail">
+                    <img src="./images/<?= $post['thumbnail'] ?>">
                 </div>
                 <div class="post__info">
-                    <a href="" class="category__button">Wild Life</a>
-                    <h3 class="post__title"><a href="post.html">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, consequatur?
-
-                    </a></h3>
+                    <?php
+                    // fetch category from categories table using category_id of post
+                    $category_id = $post['category_id'];
+                    $category_query = "SELECT * FROM categories WHERE id=$category_id";
+                    $category_result = mysqli_query($connection, $category_query);
+                    $category = mysqli_fetch_assoc($category_result);
+                    ?>
+                    <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $post['category_id'] ?>" class="category__button"><?= $category['title'] ?></a>
+                    <h3 class="post__title">
+                        <a href="<?= ROOT_URL ?>post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a>
+                    </h3>
                     <p class="post__body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, non?
+                        <?= substr($post['body'], 0, 150) ?>...
                     </p>
                     <div class="post__author">
+                        <?php
+                        // fetch author from users table using author_id
+                        $author_id = $post['author_id'];
+                        $author_query = "SELECT * FROM users WHERE id=$author_id";
+                        $author_result = mysqli_query($connection, $author_query);
+                        $author = mysqli_fetch_assoc($author_result);
+
+                        ?>
                         <div class="post__author-avatar">
-                            <img src="./images/avatar3.jpg">
+                            <img src="./images/<?= $author['avatar'] ?>">
                         </div>
                         <div class="post__author-info">
-                            <h5>By: John Mills</h5>
-                            <small>June 13, 2022 - 10:34</small>
+                            <h5>By: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
+                            <small>
+                                <?= date("M d, Y - H:i", strtotime($post['date_time'])) ?>
+                            </small>
                         </div>
-    
                     </div>
                 </div>
             </article>
-            <article class="post">
-                <div class="post__thumbail">
-                    <img src="./images/blog3.jpg">
-                </div>
-                <div class="post__info">
-                    <a href="" class="category__button">Wild Life</a>
-                    <h3 class="post__title"><a href="post.html">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, consequatur?
-
-                    </a></h3>
-                    <p class="post__body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, non?
-                    </p>
-                    <div class="post__author">
-                        <div class="post__author-avatar">
-                            <img src="./images/avatar4.jpg">
-                        </div>
-                        <div class="post__author-info">
-                            <h5>By: John Mills</h5>
-                            <small>June 13, 2022 - 10:34</small>
-                        </div>
-    
-                    </div>
-                </div>
-            </article>
-            <article class="post">
-                <div class="post__thumbail">
-                    <img src="./images/blog4.jpg">
-                </div>
-                <div class="post__info">
-                    <a href="" class="category__button">Wild Life</a>
-                    <h3 class="post__title"><a href="post.html">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, consequatur?
-
-                    </a></h3>
-                    <p class="post__body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, non?
-                    </p>
-                    <div class="post__author">
-                        <div class="post__author-avatar">
-                            <img src="./images/avatar5.jpg">
-                        </div>
-                        <div class="post__author-info">
-                            <h5>By: John Mills</h5>
-                            <small>June 13, 2022 - 10:34</small>
-                        </div>
-    
-                    </div>
-                </div>
-            </article>
-            <article class="post">
-                <div class="post__thumbail">
-                    <img src="./images/blog5.jpg">
-                </div>
-                <div class="post__info">
-                    <a href="" class="category__button">Wild Life</a>
-                    <h3 class="post__title"><a href="post.html">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, consequatur?
-
-                    </a></h3>
-                    <p class="post__body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, non?
-                    </p>
-                    <div class="post__author">
-                        <div class="post__author-avatar">
-                            <img src="./images/avatar6.jpg">
-                        </div>
-                        <div class="post__author-info">
-                            <h5>By: John Mills</h5>
-                            <small>June 13, 2022 - 10:34</small>
-                        </div>
-    
-                    </div>
-                </div>
-            </article>
-            <article class="post">
-                <div class="post__thumbail">
-                    <img src="./images/blog7.jpg">
-                </div>
-                <div class="post__info">
-                    <a href="" class="category__button">Wild Life</a>
-                    <h3 class="post__title"><a href="post.html">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, consequatur?
-
-                    </a></h3>
-                    <p class="post__body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, non?
-                    </p>
-                    <div class="post__author">
-                        <div class="post__author-avatar">
-                            <img src="./images/avatar8.jpg">
-                        </div>
-                        <div class="post__author-info">
-                            <h5>By: John Mills</h5>
-                            <small>June 13, 2022 - 10:34</small>
-                        </div>
-    
-                    </div>
-                </div>
-            </article>
-            <article class="post">
-                <div class="post__thumbail">
-                    <img src="./images/blog8.jpg">
-                </div>
-                <div class="post__info">
-                    <a href="" class="category__button">Wild Life</a>
-                    <h3 class="post__title"><a href="post.html">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, consequatur?
-
-                    </a></h3>
-                    <p class="post__body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, non?
-                    </p>
-                    <div class="post__author">
-                        <div class="post__author-avatar">
-                            <img src="./images/avatar9.jpg">
-                        </div>
-                        <div class="post__author-info">
-                            <h5>By: John Mills</h5>
-                            <small>June 13, 2022 - 10:34</small>
-                        </div>
-    
-                    </div>
-                </div>
-            </article>
-            <article class="post">
-                <div class="post__thumbail">
-                    <img src="./images/blog9.jpg">
-                </div>
-                <div class="post__info">
-                    <a href="" class="category__button">Wild Life</a>
-                    <h3 class="post__title"><a href="post.html">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, consequatur?
-
-                    </a></h3>
-                    <p class="post__body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, non?
-                    </p>
-                    <div class="post__author">
-                        <div class="post__author-avatar">
-                            <img src="./images/avatar10.jpg">
-                        </div>
-                        <div class="post__author-info">
-                            <h5>By: John Mills</h5>
-                            <small>June 13, 2022 - 10:34</small>
-                        </div>
-    
-                    </div>
-                </div>
-            </article>
-        </div>
-    </section>
-    <!-- =================================== END OF THE POST ===================================  -->
+        <?php endwhile ?>
+    </div>
+</section>
+<!--====================== END OF POSTS ====================-->
 
 
 
 
-    <section class="category__buttons">
-        <div class="container category__buttons-container">
-            <a href="" class="category__button">Art</a>
-            <a href="" class="category__button">Wild Life</a>
-            <a href="" class="category__button">Travel</a>
-            <a href="" class="category__button">Sciecne % Technologys</a>
-            <a href="" class="category__button">Food</a>
-            <a href="" class="category__button">Music</a>
-        </div>
-    </section>
-
-    <!-- END OF Category buttons-->
-
-
-    <footer>
-        <div class="footer__socials">
-            <a href="https://youtube.com" target="_blank"><i class="uil uil-youtube"></i></a>
-            <a href="https://facebook.com" target="_blank"><i class="uil uil-facebook-f"></i></a>
-            <a href="https://instagram.com" target="_blank"><i class="uil uil-instagram-alt"></i></a>
-            <a href="https://twitter.com" target="_blank"><i class="uil uil-twitter"></i></a>
-        </div>
-        <div class="container footer__container">
-            <article>
-                <h4>Categories</h4>
-                <ul>
-                    <li><a href="">Art</a></li>
-                    <li><a href="">Wild Life</a></li>
-                    <li><a href="">Travel</a></li>
-                    <li><a href="">Sciecne % Technologys</a></li>
-                    <li><a href="">Food</a></li>
-                    <li><a href="">Music</a></li>
-                </ul>
-            </article>
-            <article>
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="">Online Support</a></li>
-                    <li><a href="">Call Numbers</a></li>
-                    <li><a href="">Emails</a></li>
-                    <li><a href="">Social Support</a></li>
-                    <li><a href="">Location</a></li>
-                </ul>
-            </article>
-            <article>
-                <h4>Blog</h4>
-                <ul>
-                    <li><a href="">Safety</a></li>
-                    <li><a href="">Repair</a></li>
-                    <li><a href="">Recent</a></li>
-                    <li><a href="">Popular</a></li>
-                    <li><a href="">Categories</a></li>
-                </ul>
-            </article>
-            <article>
-                <h4>Permalinks</h4>
-                <ul>
-                    <li><a href="">Homer</a></li>
-                    <li><a href="">Blog</a></li>
-                    <li><a href="">About</a></li>
-                    <li><a href="">Services</a></li>
-                    <li><a href="">Contact</a></li>
-                </ul>
-            </article>
-        </div>
-        <div class="footer__copyright">
-            <small>Copyright &copy; 2024 Romiii </small>
-        </div>
-    </footer>
+<section class="category__buttons">
+    <div class="container category__buttons-container">
+        <?php
+        $all_categories_query = "SELECT * FROM categories";
+        $all_categories = mysqli_query($connection, $all_categories_query);
+        ?>
+        <?php while ($category = mysqli_fetch_assoc($all_categories)) : ?>
+            <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $category['id'] ?>" class="category__button"><?= $category['title'] ?></a>
+        <?php endwhile ?>
+    </div>
+</section>
+<!--====================== END OF CATEGORY BUTTONS ====================-->
 
 
 
 
-    <script src="./main.js"></script>
+<?php
+include 'partials/footer.php';
 
-
-</body>
-</html>
+?>
