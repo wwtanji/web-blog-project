@@ -1,14 +1,12 @@
 <?php
 require 'config/constants.php';
 
-// get back form data if there was a registration error
 $firstname = $_SESSION['signup-data']['firstname'] ?? null;
 $lastname = $_SESSION['signup-data']['lastname'] ?? null;
 $username = $_SESSION['signup-data']['username'] ?? null;
 $email = $_SESSION['signup-data']['email'] ?? null;
 $createpassword = $_SESSION['signup-data']['createpassword'] ?? null;
 $confirmpassword = $_SESSION['signup-data']['confirmpassword'] ?? null;
-// delete signup data session
 unset($_SESSION['signup-data']);
 ?>
 
@@ -21,11 +19,8 @@ unset($_SESSION['signup-data']);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP & MySQL Blog Application with Admin Panel</title>
-    <!-- CUSTOM STYLESHEET -->
     <link rel="stylesheet" href="<?= ROOT_URL ?>css/style.css">
-    <!-- ICONSCOUT CDN -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <!-- GOOGLE FONT (MONTSERRAT) -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 </head>

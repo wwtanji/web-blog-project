@@ -1,15 +1,12 @@
 <?php
 include 'partials/header.php';
 
-// fetch categories from database
 $query = "SELECT * FROM categories";
 $categories = mysqli_query($connection, $query);
 
-// get back form data if form was invalid
 $title = $_SESSION['add-post-data']['title'] ?? null;
 $body = $_SESSION['add-post-data']['body'] ?? null;
 
-// delete form data session
 unset($_SESSION['add-post-data']);
 ?>
 

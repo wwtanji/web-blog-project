@@ -25,7 +25,6 @@ if (isset($_GET['search']) && isset($_GET['submit'])) {
                     </div>
                     <div class="post__info">
                         <?php
-                        // fetch category from categories table using category_id of post
                         $category_id = $post['category_id'];
                         $category_query = "SELECT * FROM categories WHERE id=$category_id";
                         $category_result = mysqli_query($connection, $category_query);
@@ -40,7 +39,6 @@ if (isset($_GET['search']) && isset($_GET['submit'])) {
                         </p>
                         <div class="post__author">
                             <?php
-                            // fetch author from users table using author_id
                             $author_id = $post['author_id'];
                             $author_query = "SELECT * FROM users WHERE id=$author_id";
                             $author_result = mysqli_query($connection, $author_query);
@@ -67,7 +65,6 @@ if (isset($_GET['search']) && isset($_GET['submit'])) {
         <p>No posts found for this search</p>
     </div>
 <?php endif ?>
-<!--====================== END OF POSTS ====================-->
 
 
 
@@ -82,7 +79,6 @@ if (isset($_GET['search']) && isset($_GET['submit'])) {
         <?php endwhile ?>
     </div>
 </section>
-<!--====================== END OF CATEGORY BUTTONS ====================-->
 
 
 

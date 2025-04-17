@@ -2,7 +2,6 @@
 include 'partials/header.php';
 
 
-// fetch all posts from posts table
 $query = "SELECT * FROM posts ORDER BY date_time DESC";
 $posts = mysqli_query($connection, $query);
 ?>
@@ -18,7 +17,6 @@ $posts = mysqli_query($connection, $query);
         <button type="submit" name="submit" class="btn">Go</button>
     </form>
 </section>
-<!--====================== END OF SEARCH ====================-->
 
 
 
@@ -35,7 +33,6 @@ $posts = mysqli_query($connection, $query);
                 </div>
                 <div class="post__info">
                     <?php
-                    // fetch category from categories table using category_id of post
                     $category_id = $post['category_id'];
                     $category_query = "SELECT * FROM categories WHERE id=$category_id";
                     $category_result = mysqli_query($connection, $category_query);
@@ -50,7 +47,6 @@ $posts = mysqli_query($connection, $query);
                     </p>
                     <div class="post__author">
                         <?php
-                        // fetch author from users table using author_id
                         $author_id = $post['author_id'];
                         $author_query = "SELECT * FROM users WHERE id=$author_id";
                         $author_result = mysqli_query($connection, $author_query);
@@ -72,7 +68,6 @@ $posts = mysqli_query($connection, $query);
         <?php endwhile ?>
     </div>
 </section>
-<!--====================== END OF POSTS ====================-->
 
 
 
@@ -88,7 +83,6 @@ $posts = mysqli_query($connection, $query);
         <?php endwhile ?>
     </div>
 </section>
-<!--====================== END OF CATEGORY BUTTONS ====================-->
 
 
 

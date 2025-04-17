@@ -1,18 +1,15 @@
 <?php
 include 'partials/header.php';
 
-// fetch featured post from database
 $featured_query = "SELECT * FROM posts WHERE is_featured=1";
 $featured_result = mysqli_query($connection, $featured_query);
 $featured = mysqli_fetch_assoc($featured_result);
 
-// fetch 9 posts from posts table
 $query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT 9";
 $posts = mysqli_query($connection, $query);
 ?>
 
 
-<!-- show featured post if there's any -->
 <?php if (mysqli_num_rows($featured_result) == 1) : ?>
     <section class="featured">
         <div class="container featured__container">
@@ -21,7 +18,6 @@ $posts = mysqli_query($connection, $query);
             </div>
             <div class="post__info">
                 <?php
-                // fetch category from categories table using category_id of post
                 $category_id = $featured['category_id'];
                 $category_query = "SELECT * FROM categories WHERE id=$category_id";
                 $category_result = mysqli_query($connection, $category_query);
@@ -34,7 +30,6 @@ $posts = mysqli_query($connection, $query);
                 </p>
                 <div class="post__author">
                     <?php
-                    // fetch author from users table using author_id
                     $author_id = $featured['author_id'];
                     $author_query = "SELECT * FROM users WHERE id=$author_id";
                     $author_result = mysqli_query($connection, $author_query);
@@ -55,7 +50,6 @@ $posts = mysqli_query($connection, $query);
         </div>
     </section>
 <?php endif ?>
-<!--====================== END OF FEATURED ====================-->
 
 
 
@@ -70,7 +64,6 @@ $posts = mysqli_query($connection, $query);
                 </div>
                 <div class="post__info">
                     <?php
-                    // fetch category from categories table using category_id of post
                     $category_id = $post['category_id'];
                     $category_query = "SELECT * FROM categories WHERE id=$category_id";
                     $category_result = mysqli_query($connection, $category_query);
@@ -85,7 +78,6 @@ $posts = mysqli_query($connection, $query);
                     </p>
                     <div class="post__author">
                         <?php
-                        // fetch author from users table using author_id
                         $author_id = $post['author_id'];
                         $author_query = "SELECT * FROM users WHERE id=$author_id";
                         $author_result = mysqli_query($connection, $author_query);
@@ -107,7 +99,6 @@ $posts = mysqli_query($connection, $query);
         <?php endwhile ?>
     </div>
 </section>
-<!--====================== END OF POSTS ====================-->
 
 
 
@@ -123,7 +114,6 @@ $posts = mysqli_query($connection, $query);
         <?php endwhile ?>
     </div>
 </section>
-<!--====================== END OF CATEGORY BUTTONS ====================-->
 
 
 

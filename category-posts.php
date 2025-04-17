@@ -2,7 +2,6 @@
 include 'partials/header.php';
 
 
-// fetch posts if id is set
 if (isset($_GET['id'])) {
     $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
     $query = "SELECT * FROM posts WHERE category_id=$id ORDER BY date_time DESC";
@@ -19,7 +18,6 @@ if (isset($_GET['id'])) {
 <header class="category__title">
     <h2>
         <?php
-        // fetch category from categories table using category_id of post
         $category_id = $id;
         $category_query = "SELECT * FROM categories WHERE id=$id";
         $category_result = mysqli_query($connection, $category_query);
@@ -28,7 +26,6 @@ if (isset($_GET['id'])) {
         ?>
     </h2>
 </header>
-<!--====================== END OF CATEGORY TITLE ====================-->
 
 
 
@@ -49,7 +46,6 @@ if (isset($_GET['id'])) {
                         </p>
                         <div class="post__author">
                             <?php
-                            // fetch author from users table using author_id
                             $author_id = $post['author_id'];
                             $author_query = "SELECT * FROM users WHERE id=$author_id";
                             $author_result = mysqli_query($connection, $author_query);
@@ -75,7 +71,6 @@ if (isset($_GET['id'])) {
         <p>No posts found for this category</p>
     </div>
 <?php endif ?>
-<!--====================== END OF POSTS ====================-->
 
 
 
@@ -92,7 +87,6 @@ if (isset($_GET['id'])) {
         <?php endwhile ?>
     </div>
 </section>
-<!--====================== END OF CATEGORY BUTTONS ====================-->
 
 
 
